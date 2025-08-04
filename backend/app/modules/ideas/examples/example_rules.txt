@@ -1,0 +1,2 @@
+IDEIA PRIORIDADE-ALTA: (idea.votos >= 10) E (idea.custo <= 1000) -> SETAR status = 'aprovada', NOTIFICAR autor MENSAGEM 'Sua ideia foi aprovada!'
+IDEIA ALERTA-CUSTO: (idea.custo > 5000) -> NOTIFICAR admin MENSAGEM 'Ideia muito cara!'

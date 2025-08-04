@@ -1,0 +1,8 @@
+RULE ENFORCE-PENALTY [contracts, enforcement]:
+  ON contract.QUESTIONED WHEN DATEDIFF(now, contract.questioned_at) > 15
+  =>
+  ACTIVATE penalty,
+  SET contract.status = "penalized",
+  NOTIFY contract.parties MESSAGE "Penalidade automática aplicada",
+  ROLLBACK contract TO snapshot_before_question IF contestation.valid == False
+# Penalidade só se contestação não for válida

@@ -1,0 +1,5 @@
+RULE ENFORCE-PENALTY:
+  (contract.state == "questioned") and (contract.question_timeout > 15)
+  =>
+  activate penalty,
+  notify contract.parties message "Penalidade aplicada por descumprimento."

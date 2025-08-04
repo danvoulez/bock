@@ -1,0 +1,15 @@
+{
+  "rule_id": "WORKFLOW-001",
+  "name": "Transformação de Ideia em Contrato",
+  "description": "Condições para converter ideia em contrato.",
+  "conditions": [
+    "idea.vote_count >= 10",
+    "idea.current_priority > 7.5",
+    "EXISTS('author.signature')"
+  ],
+  "steps": [
+    "CREATE contract FROM idea",
+    "ASSIGN witnesses = SELECT users WHERE role = 'witness'",
+    "NOTIFY stakeholders"
+  ]
+}

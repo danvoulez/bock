@@ -1,0 +1,7 @@
+RULE PRIORITY-IDEA [core, ideas]:
+  ON idea.VOTE_ADDED WHEN (COUNT(idea.votes WHERE vote >= 8) >= 3 AND idea.initial_priority > 4)
+  =>
+  SET idea.current_priority = (idea.initial_priority * 0.3) + (AVG(idea.votes) * 0.7),
+  NOTIFY idea.author MESSAGE "Prioridade recalculada: {idea.current_priority}",
+  AUDIT idea FOR "Recalculo de prioridade"
+# Prioridade só recalculada se receber 3 votos altos

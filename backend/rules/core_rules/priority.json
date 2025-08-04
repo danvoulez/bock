@@ -1,0 +1,9 @@
+{
+  "rule_id": "PRIORITY-001",
+  "name": "Cálculo Democrático de Prioridade",
+  "description": "Define como prioridades são calculadas com base em votos.",
+  "condition": "resource.type == 'idea'",
+  "formula": "weighted_priority = (idea.initial_priority * 0.3) + (AVG(votes.score) * 0.7); MIN(weighted_priority, 10)",
+  "triggers": ["VOTE_CREATED", "IDEA_CREATED"],
+  "tenant_override": true
+}

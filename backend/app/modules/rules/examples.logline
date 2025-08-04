@@ -1,0 +1,25 @@
+# LogLine rules for Minicontratos
+
+rule PRIORITY-IDEA:
+  (idea.vote_count >= 5) and (idea.initial_priority > 3)
+  =>
+  set idea.current_priority = (idea.initial_priority * 0.3) + (avg(idea.votes) * 0.7),
+  notify idea.author message "Prioridade recalculada!"
+
+rule DISPATCH-WITNESS-ABSENT:
+  not exists(contract.witness)
+  =>
+  dispatch "backup_witness" with reason="ausente", contract_id=contract.id,
+  notify contract.author message "Testemunha ausente! Despacho ativado."
+
+rule ENFORCE-PENALTY:
+  (contract.state == "questioned") and (contract.question_timeout > 15)
+  =>
+  activate "penalty",
+  notify contract.parties message "Penalidade aplicada por descumprimento."
+
+rule IDEA-WORKFLOW-APPROVE:
+  (idea.current_priority >= 7.5) and (idea.vote_count >= 10)
+  =>
+  set idea.workflow_state = "APPROVED",
+  notify idea.author message "Ideia aprovada pelo coletivo!"

@@ -1,0 +1,7 @@
+RULE DISPATCH-WITNESS [contracts, compliance]:
+  ON contract.QUESTIONED WHEN NOT EXISTS(contract.witness)
+  =>
+  DISPATCH backup_witness WITH reason="Testemunha ausente", contract_id=contract.id,
+  NOTIFY contract.author MESSAGE "Despacho iniciado: backup_witness escalado",
+  ESCALATE contract TO "governance_council" IF NOT EXISTS(backup_witness) AFTER DATEADD(now, 48h)
+# Se backup não aparecer, escalar para conselho em 48h

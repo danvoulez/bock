@@ -1,0 +1,14 @@
+{
+  "rule_id": "TENANT-001",
+  "name": "Isolamento de Dados",
+  "description": "Garante isolamento completo entre tenants.",
+  "condition": "always",
+  "actions": [
+    "REQUIRE tenant_id IN ALL QUERIES",
+    "ENFORCE tenant_id = user.tenant_id",
+    "AUDIT DATA ACCESS"
+  ],
+  "penalties": {
+    "violation": "SUSPEND_TENANT_ACCOUNT"
+  }
+}

@@ -1,0 +1,7 @@
+RULE IDEA-WORKFLOW-APPROVAL [workflow]:
+  ON idea.APPROVED WHEN (idea.current_priority >= 7.5 AND idea.vote_count >= 10)
+  =>
+  CREATE contract WITH title=idea.title, author_id=idea.author,
+  EXECUTE workflow "contrato_standard",
+  NOTIFY idea.author MESSAGE "Sua ideia virou contrato!"
+# Ideias aprovadas disparam contrato e workflow
